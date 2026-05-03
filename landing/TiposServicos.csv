@@ -1,4 +1,4 @@
-﻿IdTipoServico,Descricao,Garantia,CaracteristicaServico
+﻿IdTipoServico;Descricao;Garantia;CaracteristicaServico
 1;CONTROLE INTEGRADO DE PRAGAS;90;CONTROLE DE PRAGAS
 2;TRATAMENTO PARA CUPINS;360;SOLO/ARBORÍCOLA/MADEIRA SECA
 3;Tratamento Para Ácaros;0;"Tratamento de ácaros e fungos "
