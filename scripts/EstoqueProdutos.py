@@ -20,10 +20,25 @@ with mysql_conn.connect() as conn:
     print('✅ MySQL OK')
 
 # leitura
-df = pd.read_sql('select * from vw_pessoas', sqlserver_conn)
+df = pd.read_sql('SELECT * FROM SRV.EstoqueProdutos', sqlserver_conn)
 print(f'Total: {len(df)} registros')
 
+# evitar duplicidade (opcional)
+ids_mysql = pd.read_sql('SELECT IdEstoqueProduto FROM EstoqueProdutos', mysql_conn)
+df = df[~df['IdEstoqueProduto'].isin(ids_mysql['IdEstoqueProduto'])]
+
+print(f'Novos registros: {len(df)}')
+
+df.rename(columns={'IdOrgao': 'IdEntidade'}, inplace=True)
 
 # envio
-df.to_sql('pessoas', con=mysql_conn, if_exists='append', index=False)
+df.to_sql(
+    'estoqueprodutos',
+    con=mysql_conn,
+    if_exists='append',
+    index=False,
+    chunksize=1000,
+    method='multi'
+)
+
 print('🚀 Migração finalizada!')

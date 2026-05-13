@@ -19,11 +19,12 @@ with sqlserver_conn.connect() as conn:
 with mysql_conn.connect() as conn:
     print('✅ MySQL OK')
 
-# leitura
-df = pd.read_sql('select * from vw_pessoas', sqlserver_conn)
+    # leitura
+df = pd.read_sql('SELECT * FROM vw_EntidadeOrgaos', sqlserver_conn)
+
 print(f'Total: {len(df)} registros')
 
-
 # envio
-df.to_sql('pessoas', con=mysql_conn, if_exists='append', index=False)
+df.to_sql('entidades', con=mysql_conn, if_exists='append', index=False)
+
 print('🚀 Migração finalizada!')
